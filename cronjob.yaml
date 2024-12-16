@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: playwright-app-cronjob
+spec:
+  schedule: "*/30 * * * *" # 毎時実行 (cron形式)
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: playwright-app
+              image: yryuzu/playwright-app:latest
+              resources:
+                limits:
+                  memory: "512Mi"
+                  cpu: "500m"
+              env:
+                - name: NODE_ENV
+                  value: "production"
+              volumeMounts:
+                - name: shm
+                  mountPath: /dev/shm
+          volumes:
+            - name: shm
+              emptyDir:
+                medium: Memory
+          restartPolicy: Never # Jobの失敗時に再起動しない

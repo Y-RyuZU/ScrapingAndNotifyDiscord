@@ -1,0 +1,14 @@
+{
+  "name": "notify_on_change",
+  "version": "1.0.0",
+  "description": "Scrape website and notify Discord if value > 0",
+  "main": "notify_on_change.js",
+  "scripts": {
+    "start": "node notify_on_change.js"
+  },
+  "dependencies": {
+    "playwright": "^1.49.1",
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7"
+  }
+}
