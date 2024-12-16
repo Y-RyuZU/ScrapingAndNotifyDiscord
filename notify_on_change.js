@@ -5,6 +5,7 @@ const axios = require('axios');
 const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 const TARGET_URL = process.env.TARGET_URL;
 const SELECTOR = process.env.SELECTOR;
+const PREFIX = process.env.PREFIX;
 
 // Discord通知関数
 async function sendDiscordNotification(message) {
@@ -40,7 +41,7 @@ async function checkValueAndNotify() {
 
         // 数値が0以外の場合に通知を送信
         if (numericValue > 0) {
-            await sendDiscordNotification(`注意: 該当エレメントの数値が${numericValue}です。`);
+            await sendDiscordNotification(`${PREFIX}: 該当エレメントの数値が${numericValue}です。`);
         } else {
             console.log('数値は0のため通知をスキップします。');
         }

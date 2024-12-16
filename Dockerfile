@@ -9,16 +9,12 @@ COPY package.json package-lock.json ./
 # 必要な依存関係をインストール
 RUN npm install --omit=dev
 
-# アプリケーションコードを個別にコピー（.envを除外）
+# アプリケーションコードを個別にコピー
 COPY notify_on_change.js ./
-COPY entrypoint.sh /entrypoint.sh
 
 # 必要なブラウザをインストール (Chromiumのみ)
 RUN npx playwright install chromium
 
-# エントリポイントスクリプトを実行可能に設定
-RUN chmod +x /entrypoint.sh
-
 # コンテナの実行時コマンド
-CMD ["/entrypoint.sh"]
+CMD ["node", "notify_on_change.js"]
 

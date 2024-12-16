@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: playwright-app-cronjob
 spec:
-  schedule: "*/30 * * * *" # 毎時実行 (cron形式)
+  schedule: "*/30 * * * *" # 30分ごと
   jobTemplate:
     spec:
       template:
@@ -15,10 +15,10 @@ spec:
                 limits:
                   memory: "512Mi"
                   cpu: "500m"
-              env:
-                - name: NODE_ENV
-                  value: "production"
-              volumeMounts:
+              envFrom:
+                - configMapRef:
+                    name: playwright-env-config # ConfigMapから環境変数をロード
+              volumeMounts: # Playwright用の共有メモリ
                 - name: shm
                   mountPath: /dev/shm
           volumes:
