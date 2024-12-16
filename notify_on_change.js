@@ -1,8 +1,7 @@
 const { chromium } = require('playwright');
 const axios = require('axios');
-require('dotenv').config(); // .envファイルを読み込む
 
-// 環境変数からURLとセレクタを取得
+// 環境変数から取得
 const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 const TARGET_URL = process.env.TARGET_URL;
 const SELECTOR = process.env.SELECTOR;

@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.39.0-focal
+FROM mcr.microsoft.com/playwright:v1.49.1-noble
 
 # 作業ディレクトリを設定
 WORKDIR /app
@@ -9,14 +9,16 @@ COPY package.json package-lock.json ./
 # 必要な依存関係をインストール
 RUN npm install --omit=dev
 
-# アプリケーションコードをコピー
-COPY . .
+# アプリケーションコードを個別にコピー（.envを除外）
+COPY notify_on_change.js ./
+COPY entrypoint.sh /entrypoint.sh
 
-# 必要なブラウザをインストール
+# 必要なブラウザをインストール (Chromiumのみ)
 RUN npx playwright install chromium
 
-# 環境変数を渡すために、エントリポイントをシェルスクリプト経由で設定
-COPY entrypoint.sh /entrypoint.sh
+# エントリポイントスクリプトを実行可能に設定
 RUN chmod +x /entrypoint.sh
 
+# コンテナの実行時コマンド
 CMD ["/entrypoint.sh"]
+
